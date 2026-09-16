@@ -31,11 +31,13 @@ Sinclair, Stéfan and Geoffrey Rockwell, 2016. _Voyant Tools_. Web. <http://voya
 ## Contributors
 
 * Andrew MacDonald (2008-present) a programmer who's worked on several tools including Bubblelines, Cirrus, Knots, ScatterPlot and skins including Dynamic Table of Contents, and now Spyral
-* Kaylin Land (2020-present) a research assistant at McGill working on training, documentation, testing and Spyral
+* Kaylin Land (2020-2023) a research assistant at McGill working on training, documentation, testing and Spyral
 * Bennett Kuwan Tchoh (2020-present) a research assistant at UAlberta working on training, documentation, testing and Spyral
 * Ayushi Khemka (2022-present) a research assistant at UAlberta working on training, documentation, testing and Spyral
-* Catherine Bevan (2022-present) a research assistant at UAlberta working on sonnification and Spyral
-* Elliot Damasah (2021-present) at UAlberta working on documentation, testing and Spyral 
+* Ryan Chartier (2024-present) a research assistant at UAlberta working on data management and visualization tools
+* Catherine Bevan (2022-2024) a research assistant at UAlberta working on sonnification and Spyral
+* Elliot Damasah (2021-present) at UAlberta working on documentation, testing and Spyral
+* Gabriel Couture (2021) a developer at Université Laval who contributed readability tools to Voyant
 * Cyril Briquet (2010-2011) a postdoctoral fellow who worked primarily on improving Trombone 2 (the back-end system in Java)
 * Lisa Goddard (2011-2012) a research assistant at UAlberta working on tool reviews and bug identification
 * Mark Turcato (2012-2013) a research assistant at McGill working on documentation
@@ -110,6 +112,10 @@ HyperPo and TAPoRware are the tools with the strongest affinities to Voyant. but
 **Referenceability**. The status of text analysis tools as academic resources has been a point of debate over the years. Scholars feel compelled to cite ideas and texts that come from other authors, but they are much less likely to recognized tools that have contributed to their work (and we would probably not want every scholar to cite search engines such as Google that have been used during research). We feel strongly that text analysis tools can represent a significant contributor to digital research, whether they were used to help confirm hunches or to lead the researcher into completely unanticipated realms. In any case, we have designed Voyant to be conducive to citation in various ways, including a general citation to Voyant and citations for static or dynamic results. An important component of academic knowledge is reproducibility, and providing scholars with more information on the processes followed during research — including the use of text analysis tools — is sure to be useful.
 
 Ultimately, Voyant is an attempt to learn from the strengths and weaknesses of past tools, to recognize current user needs (ex: working with much larger corpora), and to anticipate future practices (ex: referencing text analysis tools and results). We believe that the potential for tools in the interpretive process merits continual rethinking of tool design and functionality, and as such, Voyant is of course a work in progress.
+
+## Bugs and Feature Requests
+
+Found a bug? Something not working quite right? Have an idea for a great new feature in Voyant Tools? Use our [Issues Tracker on GitHub](https://github.com/voyanttools/Voyant/issues) to report bugs and make feature requests.
 
 ## Privacy Statement
 

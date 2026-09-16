@@ -3,14 +3,11 @@
  *
  * @example
  *
- *   let config = {
- *     "docIndex": null,
- *     "minRawFreq": null,
- *     "speed": null,
- *     "stopList": null
- *   };
+ * let config = {
+ * 	"minRawFreq": 20
+ * };
  *
- *   loadCorpus("austen").tool("textualarc", config);
+ * loadCorpus("austen").tool("textualarc", config);
  *
  * @class TextualArc
  * @tutorial textualarc
@@ -213,10 +210,12 @@ Ext.define('Voyant.panel.TextualArc', {
 			}
 			
 			// TODO clear previous/current drawing
-    	})
+    	});
     },
     
     draw: function(canvas, ctx) {
+		if (this.rendered === false) return;
+
     	canvas = canvas ||  this.getTargetEl().dom.querySelector("canvas");
     	ctx = ctx || canvas.getContext("2d");
     	ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -398,6 +397,7 @@ Ext.define('Voyant.panel.TextualArc', {
     	if (!this.documentTerms) {this.loadDocument(); return;}
     	this.documentTerms.load({
     		params: {
+				forTool: 'textualarc',
     			start: this.documentTerms.getCount(),
     			limit: this.documentTerms.getCount() == 0 ? 10 : 250
     		},

@@ -4,14 +4,12 @@
  *
  * @example
  *
- *   let config = {
- *     "limit": null,
- *     "numberOfDocumentsForDistinctiveWords": null,
- *     "start": null,
- *     "stopList": null,
- *   };
+ * let config = {
+ * 	"limit": 50,
+ * 	"numberOfDocumentsForDistinctiveWords": 5
+ * };
  *
- *   loadCorpus("austen").tool("Summary", config);
+ * loadCorpus("austen").tool("Summary", config);
  *
  * @class Summary
  * @tutorial summary

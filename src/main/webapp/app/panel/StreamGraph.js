@@ -3,17 +3,13 @@
  *
  * @example
  *
- *   let config = {
- *     "bins": null,
- *     "docId": null,
- *     "docIndex": null,
- *     "limit": null,
- *     "query": null,
- *     "stopList": null,
- *     "withDistributions": null
- *   };
+ * let config = {
+ * 	"bins": 50,
+ * 	"limit": 10,
+ * 	"query": ["love", "hate"]
+ * };
  *
- *   loadCorpus("austen").tool("streamgraph", config);
+ * loadCorpus("austen").tool("streamgraph", config);
  *
  * @class StreamGraph
  * @tutorial streamgraph
@@ -238,7 +234,7 @@ Ext.define('Voyant.panel.StreamGraph', {
         	if (this.getMode() === this.MODE_DOCUMENT) {
         		this.loadFromDocumentTerms();
         	} else {
-        		this.loadFromCorpusTerms(this.getCorpus().getCorpusTerms());
+        		this.loadFromCorpusTerms(this.getCorpus().getCorpusTerms({parentPanel: this}));
         	}
         }, this);
 		
@@ -256,7 +252,7 @@ Ext.define('Voyant.panel.StreamGraph', {
 		} else if (corpus.getDocumentsCount() == 1) {
 			this.loadFromDocument(corpus.getDocument(0));
 		} else {
-			this.loadFromCorpusTerms(corpus.getCorpusTerms());
+			this.loadFromCorpusTerms(corpus.getCorpusTerms({parentPanel: this}));
 		}
 	},
 
@@ -301,7 +297,7 @@ Ext.define('Voyant.panel.StreamGraph', {
     
     loadFromDocumentTerms: function(documentTerms) {
     	if (this.getCorpus()) {
-        	documentTerms = documentTerms || this.getCorpus().getDocumentTerms({autoLoad: false});
+        	documentTerms = documentTerms || this.getCorpus().getDocumentTerms({autoLoad: false, parentPanel: this});
     		documentTerms.load({
     		    callback: function(records, operation, success) {
     		    	if (success) {

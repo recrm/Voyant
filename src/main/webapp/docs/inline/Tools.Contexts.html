@@ -103,19 +103,13 @@ You can work with contexts programmatically using <a href="Spyral.Corpus.html#co
         <h5>Example</h5>
         
     <pre class="prettyprint"><code>let config = {
-    columns: null,
-    context: 5,
-    dir: null,
-    docId: null,
-    docIndex: null,
-    expand: null,
-    query: null,
-    sort: null,
-    stopList: null,
-    termColors: null
-  };
+ context: 5,
+ dir: "desc",
+ expand: 25,
+ query: ["love"]
+};
 
-  loadCorpus("austen").tool("Contexts", config);</code></pre>
+loadCorpus("austen").tool("contexts", config);</code></pre>
 
     
 
@@ -447,124 +441,6 @@ You can work with contexts programmatically using <a href="Spyral.Corpus.html#co
             
 
             <td class="description last"><p>The direction in which to sort the results: 'asc' or 'desc'</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-
-<dt>
-<h4 class="name" id="docId">
-    <span class="type-signature"></span>docId<span class="type-signature"></span>
-    
-    
-    
-</h4>
-
-
-</dt>
-<dd>
-    
-
-    <!--
-    
-    -->
-
-    
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>docId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-|
-
-<span class="param-type">Array.&lt;String&gt;</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The document ID(s) to restrict the results to.</p></td>
         </tr>
 
     

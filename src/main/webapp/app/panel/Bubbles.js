@@ -4,14 +4,11 @@
  *
  * @example
  *
- *   let config = {
- *     audio: false, // whether or not to include audio
- *     docIndex: 1, // document index to restrict to (can be comma-separated list)
- *     speed: 10, // speed of the animation (0 to 60 lower is slower)
- *     stopList: null, // a named stopword list or comma-separated list of words
- *   };
+ * let config = {
+ * 	speed: 20,
+ * };
  *
- *   loadCorpus("austen").tool("bubbles", config);
+ * loadCorpus("austen").tool("bubbles", config);
  *
  * @class Bubbles
  * @tutorial bubbles
@@ -207,6 +204,7 @@ Ext.define('Voyant.panel.Bubbles', {
     	}
 
     	doc.loadDocumentTerms(Ext.apply(this.getApiParams(["stopList"]), {
+			forTool: 'bubbles',
     		limit: 100
     	})).then(function(documentTerms) {
     		me.terms = {};

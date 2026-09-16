@@ -607,6 +607,7 @@ Ext.define('Voyant.util.Toolable', {
 			var clone = svg.cloneNode(true); // we don't want to scale, etc. the original
 			clone.setAttribute("version", 1.1)
 			clone.setAttribute("xmlns", "http://www.w3.org/2000/svg")
+			clone.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink") // TermsBerry support
 			clone.setAttribute("width", width)
 			clone.setAttribute("height", height)
 
@@ -630,7 +631,7 @@ Ext.define('Voyant.util.Toolable', {
 			var canvas = Ext.DomHelper.createDom({tag:'canvas',width: width,height:height}),
 				context = canvas.getContext("2d");
 			  
-			var image = new Image;
+			var image = new Image(width, height);
 			image.src = img;
 			image.panel = this;
 			image.onload = function() {
@@ -714,6 +715,8 @@ Ext.define('Voyant.util.Toolable', {
 			// add (and overwrite if need be) this tool's api
 			Ext.apply(api, this.getModifiedApiParams());
 			delete api.corpus;
+		} else {
+			toolForUrl = this.getApiParam('view');
 		}
 		let isDebug = api && "debug" in api;
 		delete api.view;

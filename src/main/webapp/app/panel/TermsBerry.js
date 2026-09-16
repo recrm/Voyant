@@ -3,17 +3,12 @@
  *
  * @example
  *
- *   let config = {
- *     categories: null, // a query for the keywords (can be comma-separated list)
- *     context: null, // a named stopword list or comma-separated list of words
- *     docId: null, // document index to restrict to (can be comma-separated list)
- *     docIndex: null, // the size of the context (the number of words on each side of the keyword)
- *     numInitialTerms: null, // the initial number of terms to display
- *     query: null, // the initial number of terms to display
- *     stopList: null, // the initial number of terms to display
- *   };
+ * let config = {
+ * 	context: 5,
+ * 	numInitialTerms: 20
+ * };
  *
- *   loadCorpus("austen").tool("termsberry", config);
+ * loadCorpus("austen").tool("termsberry", config);
  *
  * @class TermsBerry
  * @tutorial termsberry
@@ -347,7 +342,7 @@ Ext.define('Voyant.panel.TermsBerry', {
     		limit = undefined;
     		stopList = undefined;
     	}
-    	this.getCorpus().getCorpusTerms().load({
+    	this.getCorpus().getCorpusTerms({parentPanel: this}).load({
     		params: {
     			query: query,
 				categories: categories,
@@ -372,7 +367,7 @@ Ext.define('Voyant.panel.TermsBerry', {
     		stopList = undefined;
     	}
     	var perDocLimit = Math.ceil(parseInt(this.getApiParam('numInitialTerms')) / this.getCorpus().getDocumentsCount()); // ceil ensures there's at least 1 per doc
-    	this.getCorpus().getDocumentTerms().load({
+    	this.getCorpus().getDocumentTerms({parentPanel: this}).load({
 			params: {
 				query: query,
 				categories: categories,
@@ -392,7 +387,7 @@ Ext.define('Voyant.panel.TermsBerry', {
     },
     
     loadFromQuery: function(query) {
-    	this.getCorpus().getCorpusTerms().load({
+    	this.getCorpus().getCorpusTerms({parentPanel: this}).load({
     		params: {
  				query: query
  			},
@@ -455,7 +450,7 @@ Ext.define('Voyant.panel.TermsBerry', {
     		mode: 'corpus'
     	});
     	var params = this.getApiParams();
-    	this.getCorpus().getCorpusCollocates().load({
+    	this.getCorpus().getCorpusCollocates({parentPanel: this}).load({
     		params: Ext.apply(Ext.clone(params), {query: query, collocatesWhitelist: whitelist, limit: this.COLLOCATES_LIMIT}),
     		callback: function(records, op, success) {
     			if (success) {

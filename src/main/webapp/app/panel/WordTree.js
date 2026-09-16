@@ -3,16 +3,13 @@
  *
  * @example
  *
- *   let config = {
- *     "context": null,
- *     "docId": null,
- *     "docIndex": null,
- *     "limit": null,
- *     "query": null,
- *     "stopList": null
- *   };
+ * let config = {
+ * 	"context": 5,
+ * 	"limit": 500,
+ * 	"query": ["love", "hate"]
+ * };
  *
- *   loadCorpus("austen").tool("wordtree", config);
+ * loadCorpus("austen").tool("wordtree", config);
  *
  * @class WordTree
  * @tutorial wordtree
@@ -181,7 +178,7 @@ Ext.define('Voyant.panel.WordTree', {
         }));
         
         this.on('loadedCorpus', function(src, corpus) {
-        	var corpusTerms = corpus.getCorpusTerms({autoLoad: false});
+        	var corpusTerms = corpus.getCorpusTerms({autoLoad: false, parentPanel: this});
     		corpusTerms.load({
     		    callback: function(records, operation, success) {
     		    	if (success && records.length>0) {
@@ -391,6 +388,10 @@ Ext.define('Voyant.panel.WordTree', {
     	}
     },
     
+	/**
+	 * @suppress {uselessCode}
+	 * @private
+	 */
     stripPunctuation: function(value) {
     	if (Ext.isString(value)) return value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
     	else {

@@ -4,16 +4,11 @@
  *
  * @example
  *
- *   let config = {
- *     "columns": null,
- *     "dir": null,
- *     "docId": null,
- *     "docIndex": null,
- *     "query": null,
- *     "sort": null,
- *   };
- *
- *   loadCorpus("austen").tool("documents", config);
+ * let config = {
+ * 	docIndex: 2
+ * };
+ * 
+ * loadCorpus("austen").tool("documents", config);
  *
  * @class Documents
  * @tutorial documents

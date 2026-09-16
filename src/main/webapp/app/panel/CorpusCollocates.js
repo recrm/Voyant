@@ -4,19 +4,12 @@
  *
  * @example
  *
- *   let config = {
- *     columns: null,
- *     context: null,
- *     dir: null,
- *     docId: null,
- *     docIndex: null,
- *     query: null,
- *     sort: null,
- *     stopList: null,
- *     termColors: null
- *   };
- *
- *   loadCorpus("austen").tool("CorpusCollocates", config);
+ * let config = {
+ * 	context: 6,
+ * 	query: ["love"]
+ * };
+ * 
+ * loadCorpus("austen").tool("corpuscollocates", config);
  *
  *
  * @class CorpusCollocates
