@@ -3,19 +3,13 @@
  *
  * @example
  *
- *   let config = {
- *     "chartType": null,
- *     "docId": null,
- *     "docIndex": null,
- *     "labels": null,
- *     "limit": null,
- *     "mode": null,
- *     "query": null,
- *     "stopList": null,
- *     "withDistributions": null
- *   };
+ * let config = {
+ * 	"chartType": "barline",
+ * 	"limit": 10,
+ * 	"query": ["love", "hate"]
+ * };
  *
- *   loadCorpus("austen").tool("Trends", config);
+ * loadCorpus("austen").tool("Trends", config);
  *
  * @class Trends
  * @tutorial trends
@@ -113,7 +107,7 @@ Ext.define('Voyant.panel.Trends', {
     		/**
     		 * @memberof Tools.Trends
 			 * @instance
-			 * @property {bins}
+			 * @property {bins} bins
     		 * 
 			 * The default value will depend on the nature of the corpus:
     		 * 
@@ -312,7 +306,7 @@ Ext.define('Voyant.panel.Trends', {
     		return this.loadDocumentTerms();
     	}
     	if (!this.getApiParam("query")) {
-        	this.getCorpus().getCorpusTerms().load({
+        	this.getCorpus().getCorpusTerms({parentPanel: this}).load({
         		params: {
         			limit: this.getApiParam('limit'),
         			stopList: this.getApiParam("stopList")
@@ -351,7 +345,7 @@ Ext.define('Voyant.panel.Trends', {
     		docLabels = docLabels.map(function(doc,i) {return (i+1)+")"+ doc})
     	}
     	Ext.applyIf(params, this.getApiParams());
-    	this.getCorpus().getCorpusTerms().load({
+    	this.getCorpus().getCorpusTerms({parentPanel: this}).load({
     		params: params,
     		callback: function(records, operation, success) {
     			var data = [], series = [], chartType = this.getApiParam('chartType');
@@ -436,7 +430,7 @@ Ext.define('Voyant.panel.Trends', {
 
     loadDocumentTerms: function(params) {
     	if (!this.getApiParam("query")) {
-        	this.getCorpus().getCorpusTerms().load({
+        	this.getCorpus().getCorpusTerms({parentPanel: this}).load({
         		params: {
         			limit: this.getApiParam('limit'),
         			stopList: this.getApiParam("stopList")
@@ -467,7 +461,7 @@ Ext.define('Voyant.panel.Trends', {
     	}
     	Ext.applyIf(params, this.getApiParams());
     	
-    	this.getCorpus().getDocumentTerms().load({
+    	this.getCorpus().getDocumentTerms({parentPanel: this}).load({
     		params: params,
     		callback: function(records, operation, success) {
     			var data = [], series = [],  chartType = this.getApiParam('chartType');
@@ -735,6 +729,10 @@ Ext.define('Voyant.panel.Trends', {
 	        itemhighlightchange: function (chart, item) {
 	            chart.el.dom.style.cursor = item ? 'pointer' : '';
 	        },
+			/**
+			 * @suppress {uselessCode}
+			 * @private
+			 */
 	        afterrender : function() {
 	        	return // TODO: this seems to cause problems, perhaps not destroying properly?
 	        	Ext.defer(function() { // seem to need to defer

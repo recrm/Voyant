@@ -4,26 +4,16 @@
  *
  * @example
  *
- *   let config = {
- *     "analysis": null,
- *     "bins": null,
- *     "clusters": null,
- *     "comparisonType": null,
- *     "dimensions": null,
- *     "docId": null,
- *     "iterations": null,
- *     "label": null,
- *     "limit": null,
- *     "perplexity": null,
- *     "query": null,
- *     "stopList": null,
- *     "storeJson": null,
- *     "target": null,
- *     "term": null,
- *     "whiteList": null,
- *   };
- *
- *   loadCorpus("austen").tool("scatterplot", config);
+ * let config = {
+ * 	"analysis": "ca",
+ * 	"bins": 5,
+ * 	"clusters": 3,
+ * 	"comparisonType": "relative",
+ * 	"dimensions": 2,
+ * 	"limit": 25
+ * }; 
+ * 
+ * loadCorpus("austen").tool("scatterplot", config);
  *
  * @class ScatterPlot
  * @tutorial scatterplot
@@ -194,15 +184,19 @@ Ext.define('Voyant.panel.ScatterPlot', {
     
     initComponent: function() {
     	this.setCaStore(Ext.create('Voyant.data.store.CAAnalysis', {
+			parentPanel: this,
     		listeners: {load: this.maskAndBuildChart, scope: this}
     	}));
     	this.setPcaStore(Ext.create('Voyant.data.store.PCAAnalysis', {
+			parentPanel: this,
     		listeners: {load: this.maskAndBuildChart, scope: this}
     	}));
     	this.setTsneStore(Ext.create('Voyant.data.store.TSNEAnalysis', {
+			parentPanel: this,
     		listeners: {load: this.maskAndBuildChart, scope: this}
     	}));
     	this.setDocSimStore(Ext.create('Voyant.data.store.DocSimAnalysis', {
+			parentPanel: this,
     		listeners: {load: this.maskAndBuildChart, scope: this}
     	}));
     	

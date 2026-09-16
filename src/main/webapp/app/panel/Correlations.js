@@ -4,20 +4,14 @@
  *
  * @example
  *
- *   let config = {
- *     columns: null,
- *     dir: null,
- *     docId: null,
- *     docIndex: null,
- *     minInDocumentsCountRatio: null,
- *     query: null,
- *     sort: null,
- *     stopList: null,
- *     termColors: null,
- *     withDistributions: null
- *   };
- *
- *   loadCorpus("austen").tool("correlations", config);
+ * let config = {
+ * 	minInDocumentsCountRatio: 50, 
+ * 	query: ["love", "hate"],
+ * 	sort: "correlation",
+ * 	dir: "asc"
+ * };
+ * 
+ * loadCorpus("austen").tool("correlations", config);
  *
  *
  * @class Correlations

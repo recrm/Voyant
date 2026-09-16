@@ -209,7 +209,9 @@ public class Trombone extends HttpServlet {
 			URLConnection c;
 			try {
 				url = new URL(parameters.getParameterValue("fetchData").replaceAll(" ", "+"));
-				System.out.println(url);
+				if (parameters.getParameterValue("forTool", "").equals("ServerMessage") == false) {
+					System.out.println("fetchData: "+url);
+				}
 				c = url.openConnection();
 //				StringBuilder sb = new StringBuilder();
 //				BufferedReader in = new BufferedReader(new InputStreamReader(c.getInputStream()));
@@ -315,10 +317,11 @@ public class Trombone extends HttpServlet {
 		else {
 			// we set a permissive control to data to allow calls from elsewhere – this may need to be monitored
 			resp.setHeader("Access-Control-Allow-Origin", "*");
-			Writer writer = resp.getWriter();
-			runTromboneController(parameters, resp.getWriter());
-			writer.flush();
-			writer.close();
+			try (Writer writer = resp.getWriter()) {
+				runTromboneController(parameters, writer);
+			} catch (Exception e) {
+				System.out.println("TROMBONE error: "+e.getMessage());
+			}
 		}
 		
 	}

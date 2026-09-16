@@ -4,14 +4,11 @@
  *
  * @example
  *
- *   let config = {
- *     "audio": false,
- *     "docId": null,
- *     "query": null,
- *     "stopList": "auto"
- *   };
- *
- *   loadCorpus("austen").tool("knots", config);
+ * let config = {
+ * 	"query": ["love", "hate"]
+ * }; 
+ * 
+ * loadCorpus("austen").tool("knots", config);
  *
  * @class Knots
  * @tutorial knots
@@ -190,6 +187,7 @@ Ext.define('Voyant.panel.Knots', {
 				type: 'ajax',
 				url: Voyant.application.getTromboneUrl(),
 				extraParams: {
+					forTool: 'knots',
 					tool: 'corpus.DocumentTerms',
 					withDistributions: 'raw',
 					withPositions: true

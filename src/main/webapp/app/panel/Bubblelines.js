@@ -4,15 +4,13 @@
  *
  * @example
  *
- *   let config = {
- *     bins: 5, // number of bins to separate a document into
- *     docIndex: 1, //document index to restrict to (can be comma-separated list)
- *     maxDocs: 5, // maximum number of documents to show
- *     query: "love", // a query to search for in the corpus
- *     stopList: null, // a named stopword list or comma-separated list of words
- *   };
- *
- *   loadCorpus("austen").tool("bubblelines", config);
+ * let config = {
+ *     bins: 5,
+ *     maxDocs: 10,
+ *     query: ["love", "hate"],
+ * };
+ * 
+ * loadCorpus("austen").tool("bubblelines", config);
  *
  * @class Bubblelines
  * @tutorial bubblelines
@@ -93,6 +91,7 @@ Ext.define('Voyant.panel.Bubblelines', {
     	
     	this.on('loadedCorpus', function(src, corpus) {
     		this.setDocTermStore(corpus.getDocumentTerms({
+				parentPanel: this,
     			proxy: {
 	    			extraParams: {
 						withDistributions: 'raw',
@@ -382,7 +381,7 @@ Ext.define('Voyant.panel.Bubblelines', {
 		this.setApiParam('docId', docIds);
 		
 		// get top terms in corpus
-		this.getCorpus().getCorpusTerms({autoload: false}).load({
+		this.getCorpus().getCorpusTerms({autoload: false, parentPanel: this}).load({
 			callback: function(records, operation, success) {
 		    	var query = [];
 		    	records.forEach(function(record, index) {

@@ -1,40 +1,37 @@
 /**
- * Collocates Graph represents keywords and terms that occur in close proximity as a force directed network graph.
+ * Links represents keywords and terms that occur in close proximity (i.e. collocated) as a force directed network graph.
  * You can work with collocates programmatically using {@link Spyral.Corpus#collocates}.
  *
  * @example
  *
- *   let config = {
- *     centralize: null,
- *     context: 5,
- *     limit: 5,
- *     query: null,
- *     stopList: "auto",
- *   };
+ * let config = {
+ * 	centralize: "love", 
+ * 	context: 10
+ * };
+ * 
+ * loadCorpus("austen").tool("links", config);
  *
- *   loadCorpus("austen").tool("collocatesgraph", config);
- *
- * @class CollocatesGraph
- * @tutorial collocatesgraph
+ * @class Links
+ * @tutorial links
  * @memberof Tools
  */
-Ext.define('Voyant.panel.CollocatesGraph', {
+Ext.define('Voyant.panel.Links', {
 	extend: 'Ext.panel.Panel',
 	mixins: ['Voyant.panel.Panel'],
-	alias: 'widget.collocatesgraph',
+	alias: 'widget.links',
     statics: {
     	i18n: {
     	},
     	api: {
 			/**
-			 * @memberof Tools.CollocatesGraph
+			 * @memberof Tools.Links
 			 * @instance
 			 * @property {query}
 			 */
     		query: undefined,
 
 			/**
-			 * @memberof Tools.CollocatesGraph
+			 * @memberof Tools.Links
 			 * @instance
 			 * @property {limit}
 			 * @default
@@ -42,7 +39,7 @@ Ext.define('Voyant.panel.CollocatesGraph', {
     		limit: 5,
 
 			/**
-			 * @memberof Tools.CollocatesGraph
+			 * @memberof Tools.Links
 			 * @instance
 			 * @property {stopList}
 			 * @default
@@ -50,7 +47,7 @@ Ext.define('Voyant.panel.CollocatesGraph', {
     		stopList: 'auto',
 
 			/**
-			 * @memberof Tools.CollocatesGraph
+			 * @memberof Tools.Links
 			 * @instance
 			 * @property {context}
 			 * @default
@@ -58,7 +55,7 @@ Ext.define('Voyant.panel.CollocatesGraph', {
     		context: 5,
 
 			/**
-			 * @memberof Tools.CollocatesGraph
+			 * @memberof Tools.Links
 			 * @instance
 			 * @property {String} centralize If specified, will "centralize" on this keyword
 			 */
@@ -343,7 +340,7 @@ Ext.define('Voyant.panel.CollocatesGraph', {
 					limit = Ext.isArray(query) ? query.length : query.split(',').length;
 				}
 			}
-			this.getCorpus().getCorpusTerms({autoLoad: false}).load({
+			this.getCorpus().getCorpusTerms({autoLoad: false, parentPanel: this}).load({
 				params: {
 					limit: limit,
 					query: query,
@@ -370,7 +367,7 @@ Ext.define('Voyant.panel.CollocatesGraph', {
     	var params = this.getApiParams();
     	params.noCache=true;
     	(Ext.isString(query) ? [query] : query).forEach(function(q) {
-        	this.getCorpus().getCorpusCollocates({autoLoad: false}).load({
+        	this.getCorpus().getCorpusCollocates({autoLoad: false, parentPanel: this}).load({
         		params: Ext.apply(Ext.clone(params), {query: q}),
         		callback: function(records, operations, success) {
         			if (success) {
@@ -924,7 +921,7 @@ Ext.define('Voyant.panel.CollocatesGraph', {
     	Ext.Array.include(query, d.term)
 		this.setApiParam("query", query);
 
-    	var corpusCollocates = this.getCorpus().getCorpusCollocates({autoLoad: false});
+    	var corpusCollocates = this.getCorpus().getCorpusCollocates({autoLoad: false, parentPanel: this});
     	corpusCollocates.load({
     		params: Ext.apply(this.getApiParams(), {query: d.term, start: d.start, limit: limit}),
     		callback: function(records, operation, success) {

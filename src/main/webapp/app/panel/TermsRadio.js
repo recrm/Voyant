@@ -3,18 +3,15 @@
  *
  * @example
  *
- *   let config = {
- *    "bins": 5,
- *    "limit": null,
- *    "query": null,
- *    "slider": null,
- *    "speed": null,
- *    "stopList": null,
- *    "visibleBins": null,
- *    "yAxisScale": null
- *   };
+ * let config = {
+ * 	"bins": 5,
+ * 	"limit": 50,
+ * 	"query": ["love", "hate"],
+ * 	"visibleBins": 10,
+ * 	"yAxisScale": "linear"
+ * };
  *
- *   loadCorpus("austen").tool("termsradio", config);
+ * loadCorpus("austen").tool("termsradio", config);
  *
  *
  * @class TermsRadio
@@ -159,7 +156,7 @@ Ext.define('Voyant.panel.TermsRadio', {
 			
 			var query = this.getApiParam('query');
 			// check for no results
-			if (query) {
+			if (query && query.indexOf(',') === -1) {
 				if (records.length==0 || (records.length==1 && records[0].getRawFreq()==0)) {
 					this.toastInfo({
 						html: this.localize("termNotFound"),
@@ -170,24 +167,6 @@ Ext.define('Voyant.panel.TermsRadio', {
 				}
 			}
 		};
-		
-		this.corpusStore = Ext.create("Voyant.data.store.CorpusTerms", {
-			listeners : {
-				load: {
-					fn : onLoadHandler.bind(this, 'corpus'),
-					scope : this
-				}
-			}
-		});
-		
-		this.documentStore = Ext.create("Voyant.data.store.DocumentTerms", {
-			listeners : {
-				load: {
-					fn : onLoadHandler.bind(this, 'document'),
-					scope : this
-				}
-			}
-		});
 		
 		Ext.apply(config, {
 			title: this.localize('title'),
@@ -404,6 +383,26 @@ Ext.define('Voyant.panel.TermsRadio', {
 		this.callParent(arguments);
 		this.mixins['Voyant.panel.Panel'].constructor.apply(this, arguments);
 		
+		this.corpusStore = Ext.create("Voyant.data.store.CorpusTerms", {
+			parentPanel: this,
+			listeners : {
+				load: {
+					fn : onLoadHandler.bind(this, 'corpus'),
+					scope : this
+				}
+			}
+		});
+		
+		this.documentStore = Ext.create("Voyant.data.store.DocumentTerms", {
+			parentPanel: this,
+			listeners : {
+				load: {
+					fn : onLoadHandler.bind(this, 'document'),
+					scope : this
+				}
+			}
+		});
+
 		this.on('boxready', function(component) {
 			var sliderParam = this.getApiParam('slider');
 			var showSlider = sliderParam === undefined ? true : sliderParam === 'true';
@@ -416,6 +415,7 @@ Ext.define('Voyant.panel.TermsRadio', {
 		}, this);
 		
 		/**
+		 * @suppress {misplacedTypeAnnotation}
 		 * @event corpusTypesSelected
 		 * @type listener
 		 * @private

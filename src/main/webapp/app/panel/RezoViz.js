@@ -3,15 +3,13 @@
  *
  * @example
  *
- *   let config = {
- *     "docId": null,
- *     "limit": null,
- *     "minEdgeCount": null,
- *     "nerService": null,
- *     "type": null,
- *   };
+ * let config = {
+ * 	"limit": 50,
+ * 	"minEdgeCount": 1,
+ * 	"nerService": "spacy"
+ * };
  *
- *   loadCorpus("austen").tool("rezoviz", config);
+ * loadCorpus("frank").tool("rezoviz", config);
  *
  * @class RezoViz
  * @tutorial rezoviz

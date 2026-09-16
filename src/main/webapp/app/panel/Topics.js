@@ -4,16 +4,15 @@
  *
  * @example
  *
- *   let config = {
- *     "iterations": null,
- *     "perDocLimit": null,
- *     "seed": null,
- *     "stopList": null,
- *     "termsPerTopic": null,
- *     "topics": null
- *   };
+ * let config = {
+ * 	"iterations": 50,
+ * 	"perDocLimit": 1000,
+ * 	"seed": 42,
+ * 	"termsPerTopic": 50,
+ * 	"topics": 10
+ * };
  *
- *   loadCorpus("austen").tool("Topics", config);
+ * loadCorpus("austen").tool("Topics", config);
  *
  * @class Topics
  * @tutorial topics
@@ -373,6 +372,7 @@ Ext.define('Voyant.panel.Topics', {
 		params.tool = 'analysis.TopicModeling';
 		params.corpus = this.getCorpus().getAliasOrId();
 		params.noCache = 1;
+		params.forTool = 'topics';
 
 		var iterations = this.getApiParam('iterations');
 		var msg = Ext.MessageBox.progress({

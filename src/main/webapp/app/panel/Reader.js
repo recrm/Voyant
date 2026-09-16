@@ -3,15 +3,11 @@
  * You can work with corpus text programmatically using {@link Spyral.Corpus#texts}.
  *
  * @example
- *
- *   let config = {
- *     "limit": null,
- *     "query": null,
- *     "skipTodocId": null,
- *     "start": null
- *   };
- *
- *   loadCorpus("austen").tool("Reader", config);
+ * let config = {
+ * 	"query": ["love"]
+ * };
+ * 
+ * loadCorpus("austen").tool("Reader", config);
  *
  * @class Reader
  * @tutorial reader
@@ -29,7 +25,8 @@ Ext.define('Voyant.panel.Reader', {
 			entityType: 'entity type',
 			nerVoyant: 'Entity Identification with Voyant',
 			nerNssi: 'Entity Identification with NSSI',
-			nerSpacy: 'Entity Identification with SpaCy'
+			nerSpacy: 'Entity Identification with SpaCy',
+			nerDisabled: 'Entity Identification is not available for large documents (maximum 100,000 words)'
     	},
     	api: {
 			/**
@@ -323,7 +320,6 @@ Ext.define('Voyant.panel.Reader', {
 					glyph: 'xf0eb@FontAwesome',
 					tooltip: this.localize('highlightEntities'),
 					itemId: 'nerServiceParent',
-					hidden: true,
 					menu: {
 						items: [{
 							xtype: 'menucheckitem',
@@ -359,7 +355,15 @@ Ext.define('Voyant.panel.Reader', {
 						// 	handler: this.nerServiceHandler,
 						// 	scope: this
 						// }
-						]
+						],
+						listeners: {
+							beforeshow: function(menu, e) {
+								if (this.down('#nerServiceParent').hasCls('x-btn-disabled')) {
+									return false;
+								}
+							},
+							scope: this
+						}
 					}
 				}]
     		}],
@@ -811,12 +815,12 @@ Ext.define('Voyant.panel.Reader', {
 
 			var docTokens = {};
 			var totalTokens = 0;
-			var showNerButton = this.getEnableEntitiesList() && this.getApplication().getEntitiesEnabled ? this.getApplication().getEntitiesEnabled() : false;
+			var enableNerButton = this.getEnableEntitiesList() && this.getApplication().getEntitiesEnabled ? this.getApplication().getEntitiesEnabled() : false;
 			var currIndex = info1.docIndex;
 			while (currIndex <= info2.docIndex) {
 				var tokens = corpus.getDocument(currIndex).get('tokensCount-lexical');
 				if (tokens > this.MAX_TOKENS_FOR_NER) {
-					showNerButton = false;
+					enableNerButton = false;
 				}
 				if (currIndex === info2.docIndex) {
 					tokens = info2.position; // only count tokens up until last displayed word
@@ -830,10 +834,10 @@ Ext.define('Voyant.panel.Reader', {
 			}
 
 			var nerParent = this.down('#nerServiceParent');
-			if (showNerButton) {
-				nerParent.show();
+			if (enableNerButton) {
+				nerParent.removeCls('x-btn-disabled').setTooltip('');
 			} else {
-				nerParent.hide();
+				nerParent.addCls('x-btn-disabled').setTooltip(this.localize('nerDisabled'));
 			}
 			
 			var tokenPos = Math.round(totalTokens * amount);

@@ -18,12 +18,7 @@ Ext.define('Voyant.panel.Entities', {
 			nerSpacy: 'Entity Identification with SpaCy',
 		},
 		api: {
-			/**
-			 * @memberof Tools.Contexts
-			 * @instance
-			 * @property {docId}
-			 */
-    		docId: undefined,
+    		docId: undefined
 		}
 	},
 

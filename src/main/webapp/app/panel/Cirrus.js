@@ -4,19 +4,11 @@
  *
  * @example
  *
- *   let config = {
- *     background: null,
- *     categories: null,
- *     docIndex: null,
- *     fontFamily: null,
- *     inlineData: null,
- *     limit: null,
- *     stopList: null,
- *     visible: null,
- *     whiteList: null,
- *   };
+ * let config = {
+ * 	visible: 50
+ * };
  *
- *   loadCorpus("austen").tool("cirrus", config);
+ * loadCorpus("austen").tool("cirrus", config);
  *
  * @class Cirrus
  * @tutorial cirrus
