@@ -5,7 +5,7 @@
 	
 	<groupId>org.voyant-tools</groupId>
 	<artifactId>Voyant</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<name>Voyant</name>
 
 	<packaging>war</packaging>
@@ -13,8 +13,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
 	</properties>
 
 	<build>
@@ -36,41 +36,22 @@
 
 		<plugins>
 			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.2.0</version>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/src/main/webapp/WEB-INF/lib</outputDirectory>
-							<includeScope>runtime</includeScope>
-							<!-- we have to skip trombone to ensure that we're using compiled 
-								classes from project -->
-							<excludeArtifactIds>trombone</excludeArtifactIds>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<!-- http://maven.apache.org/plugins/maven-war-plugin/overlays.html -->
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.3.2</version>
+				<version>3.5.1</version>
 				<configuration>
-					<outputDirectory>${basedir}/target</outputDirectory>
-					<webappDirectory>${basedir}/src/main/webapp</webappDirectory>
-					<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+					<webappDirectory>${project.build.directory}/voyant</webappDirectory>
+					<warSourceDirectory>${project.basedir}/src/main/webapp</warSourceDirectory>
 					<packagingExcludes>**/node_modules/**</packagingExcludes>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.15.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>21</source>
+					<target>21</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -79,6 +60,42 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>11.0.7</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.6.3</version>
+				<executions>
+					<execution>
+						<id>enforce-ban-duplicate-classes</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<banDuplicateClasses>
+									<scopes>
+										<scope>compile</scope>
+										<scope>provided</scope>
+									</scopes>
+									<findAllDuplicates>true</findAllDuplicates>
+									<ignoreClasses>
+										<ignoreClass>org.jspecify.*</ignoreClass>
+									</ignoreClasses>
+								</banDuplicateClasses>
+								<!-- <dependencyConvergence/> -->
+							</rules>
+							<fail>true</fail>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>extra-enforcer-rules</artifactId>
+						<version>1.12.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -86,27 +103,11 @@
 		<dependency>
 			<groupId>org.voyant-tools</groupId>
 			<artifactId>trombone</artifactId>
-			<version>5.2.28</version>
+			<version>6.0.0-SNAPSHOT</version>
 			<exclusions>
-				<exclusion>
-					<groupId>javax.xml.bind</groupId>
-					<artifactId>jaxb-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.xml.bind</groupId>
-					<artifactId>jaxb-impl</artifactId>
-				</exclusion>
 				<exclusion>
 					<groupId>javax.activation</groupId>
 					<artifactId>javax.activation-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.xml.bind</groupId>
-					<artifactId>jaxb-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.activation</groupId>
-					<artifactId>activation</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>junit</groupId>
@@ -115,9 +116,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>6.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -131,14 +132,14 @@
 			<version>1.11.0</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.6.0</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-fileupload2-jakarta-servlet6</artifactId>
+			<version>2.0.0-M5</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.javascript</groupId>
 			<artifactId>closure-compiler</artifactId>
-			<version>v20240317</version>
+			<version>v20260825</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -148,6 +149,10 @@
 				<exclusion><!-- exclude here since newer version gets included under tika-parsers -->
 					<groupId>commons-codec</groupId>
 					<artifactId>commons-codec</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
